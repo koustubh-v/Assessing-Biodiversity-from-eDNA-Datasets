@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Download, 
   FileText, 
@@ -13,7 +14,9 @@ import {
   TreePine,
   Microscope,
   FlaskConical,
-  Shield
+  Shield,
+  Map,
+  Activity
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -23,7 +26,7 @@ const Report = () => {
     { label: "Samples Processed", value: "127", icon: Database },
     { label: "Sequences Analyzed", value: "1,247", icon: Microscope },
     { label: "Species Found", value: "34", icon: TreePine },
-    { label: "Shannon Index", value: "2.41", icon: BarChart3 }
+    { label: "Coverage Area", value: "2.4 km²", icon: Map }
   ];
 
   const speciesData = [
@@ -86,54 +89,129 @@ const Report = () => {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-          {/* Species Distribution Chart */}
-          <Card className="glass-card p-6 lg:col-span-2">
+        {/* Interactive Graphs Section */}
+        <Card className="glass-card p-6 mb-8">
+          <Tabs defaultValue="composition" className="w-full">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold">Species Group Distribution</h3>
-              <PieChart className="h-5 w-5 text-muted-foreground" />
+              <h3 className="text-lg font-semibold">Analysis Dashboard</h3>
+              <TabsList className="glass-card">
+                <TabsTrigger value="composition" className="flex items-center gap-2">
+                  <PieChart className="h-4 w-4" />
+                  Composition
+                </TabsTrigger>
+                <TabsTrigger value="diversity" className="flex items-center gap-2">
+                  <BarChart3 className="h-4 w-4" />
+                  Diversity
+                </TabsTrigger>
+                <TabsTrigger value="heatmap" className="flex items-center gap-2">
+                  <Activity className="h-4 w-4" />
+                  Heatmap
+                </TabsTrigger>
+                <TabsTrigger value="map" className="flex items-center gap-2">
+                  <Map className="h-4 w-4" />
+                  Map
+                </TabsTrigger>
+              </TabsList>
             </div>
-            
-            <div className="space-y-4">
-              {taxonomyGroups.map((group, index) => (
-                <div key={index} className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="font-medium">{group.group}</span>
-                    <span className="text-muted-foreground">
-                      {group.species} species ({group.percentage}%)
-                    </span>
-                  </div>
-                  <div className="w-full bg-muted rounded-full h-2">
-                    <div
-                      className={`${group.color} h-2 rounded-full transition-all duration-500`}
-                      style={{ width: `${group.percentage}%` }}
-                    />
+
+            <TabsContent value="composition" className="space-y-4">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="lg:col-span-2">
+                  <h4 className="text-md font-medium mb-4">Species Group Distribution</h4>
+                  <div className="space-y-4">
+                    {taxonomyGroups.map((group, index) => (
+                      <div key={index} className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className="font-medium">{group.group}</span>
+                          <span className="text-muted-foreground">
+                            {group.species} species ({group.percentage}%)
+                          </span>
+                        </div>
+                        <div className="w-full bg-muted rounded-full h-2">
+                          <div
+                            className={`${group.color} h-2 rounded-full transition-all duration-500`}
+                            style={{ width: `${group.percentage}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              ))}
-            </div>
-          </Card>
+                <div className="space-y-4">
+                  <h4 className="text-md font-medium">Key Metrics</h4>
+                  <div className="p-4 bg-muted/20 rounded-lg">
+                    <p className="text-sm text-muted-foreground">Total Species</p>
+                    <p className="text-xl font-bold">34</p>
+                  </div>
+                  <div className="p-4 bg-muted/20 rounded-lg">
+                    <p className="text-sm text-muted-foreground">Dominant Group</p>
+                    <p className="text-xl font-bold">Fish</p>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
 
-          {/* Biodiversity Metrics */}
-          <Card className="glass-card p-6">
-            <h3 className="text-lg font-semibold mb-6">Diversity Metrics</h3>
-            <div className="space-y-4">
-              <div className="p-4 bg-gradient-yellow-subtle rounded-lg">
-                <p className="text-sm text-muted-foreground">Shannon Diversity</p>
-                <p className="text-xl font-bold text-primary">2.41</p>
-                <p className="text-xs text-muted-foreground">High diversity</p>
+            <TabsContent value="diversity" className="space-y-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div>
+                  <h4 className="text-md font-medium mb-4">Diversity Indices</h4>
+                  <div className="space-y-4">
+                    <div className="p-4 bg-gradient-yellow-subtle rounded-lg">
+                      <p className="text-sm text-muted-foreground">Shannon Diversity</p>
+                      <p className="text-xl font-bold text-primary">2.41</p>
+                      <p className="text-xs text-muted-foreground">High diversity</p>
+                    </div>
+                    <div className="p-4 bg-muted/20 rounded-lg">
+                      <p className="text-sm text-muted-foreground">Species Richness</p>
+                      <p className="text-xl font-bold">34</p>
+                    </div>
+                    <div className="p-4 bg-muted/20 rounded-lg">
+                      <p className="text-sm text-muted-foreground">Evenness Index</p>
+                      <p className="text-xl font-bold">0.68</p>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-md font-medium mb-4">Abundance Distribution</h4>
+                  <div className="space-y-3">
+                    {speciesData.slice(0, 4).map((species, index) => (
+                      <div key={index} className="flex justify-between items-center p-3 bg-muted/10 rounded-lg">
+                        <span className="font-medium text-sm italic">{species.name}</span>
+                        <span className="text-sm text-muted-foreground">{species.abundance}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <div className="p-4 bg-muted/20 rounded-lg">
-                <p className="text-sm text-muted-foreground">Species Richness</p>
-                <p className="text-xl font-bold">34</p>
+            </TabsContent>
+
+            <TabsContent value="heatmap" className="space-y-4">
+              <div className="text-center py-12">
+                <Activity className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                <h4 className="text-md font-medium mb-2">Species Abundance Heatmap</h4>
+                <p className="text-sm text-muted-foreground">
+                  Interactive heatmap showing species distribution patterns across sampling locations
+                </p>
+                <div className="mt-6 p-8 bg-muted/10 rounded-lg">
+                  <div className="text-xs text-muted-foreground">Heatmap visualization would be rendered here</div>
+                </div>
               </div>
-              <div className="p-4 bg-muted/20 rounded-lg">
-                <p className="text-sm text-muted-foreground">Evenness Index</p>
-                <p className="text-xl font-bold">0.68</p>
+            </TabsContent>
+
+            <TabsContent value="map" className="space-y-4">
+              <div className="text-center py-12">
+                <Map className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                <h4 className="text-md font-medium mb-2">Geographic Distribution</h4>
+                <p className="text-sm text-muted-foreground">
+                  Interactive map showing biodiversity hotspots and sampling locations
+                </p>
+                <div className="mt-6 p-8 bg-muted/10 rounded-lg">
+                  <div className="text-xs text-muted-foreground">Geographic map would be rendered here</div>
+                </div>
               </div>
-            </div>
-          </Card>
-        </div>
+            </TabsContent>
+          </Tabs>
+        </Card>
 
         {/* Detailed Species Table */}
         <Card className="glass-card p-6">

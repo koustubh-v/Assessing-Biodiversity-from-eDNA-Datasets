@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import heroImage from "@/assets/hero-bg.jpg";
+import dnaBg from "@/assets/dna-bg.jpg";
 
 const Index = () => {
   const features = [
@@ -81,8 +82,12 @@ const Index = () => {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-30"
           style={{ backgroundImage: `url(${heroImage})` }}
+        />
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
+          style={{ backgroundImage: `url(${dnaBg})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/50 to-background" />
         
