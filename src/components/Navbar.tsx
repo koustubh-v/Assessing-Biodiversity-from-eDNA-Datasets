@@ -7,12 +7,14 @@ const Navbar = () => {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // --- UPDATED LINKS ---
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "/upload", label: "Upload" },
-    { href: "/processing", label: "Processing" },
-    { href: "/report", label: "Report" },
+    { href: "/features", label: "Features" },
+    { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact" },
   ];
+  // ---------------------
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 navbar-blur">
