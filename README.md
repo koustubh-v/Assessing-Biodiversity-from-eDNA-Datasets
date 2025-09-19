@@ -1,73 +1,144 @@
-# Welcome to your Lovable project
+Biodiversity Analysis Platform (Frontend)
 
-## Project info
+A modern, minimalistic, dark-themed web application for **Biodiversity Mapping using eDNA datasets**.
+Built for **Smart India Hackathon (SIH) 2025**.
 
-**URL**: https://lovable.dev/projects/e6fbab75-c60b-40fe-8713-1fa635b95118
+The platform allows users to:
 
-## How can I edit this code?
+* Upload environmental DNA (eDNA) datasets
+* Process and analyze DNA sequences
+* Visualize biodiversity metrics & taxonomic classification
+* Generate detailed interactive reports
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/e6fbab75-c60b-40fe-8713-1fa635b95118) and start prompting.
+* **Dark Black Theme** with **Google Sans typography**
+* **Transparent Navbar & Buttons** with smooth hover animations
+* **Highlighted Terms** with yellow gradient & handwritten underline in hero section
+* **Landing Page** with features, benefits, process flow, and privacy section
+* **Upload Page** with drag-and-drop dataset uploader
+* **Processing Page** with progress bar, step tracker, and live logs
+* **Report Page** with:
 
-Changes made via Lovable will be committed automatically to this repo.
+  * Overview cards (Samples, Sequences, Species Found, Shannon Index)
+  * Graphical reports (Pie, Bar, Line, Taxonomy Tree, Heatmap, Map View)
+  * Searchable & filterable species table
+  * Export options (CSV, PDF)
 
-**Use your preferred IDE**
+---
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Pages Overview
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+###  Landing Page
 
-Follow these steps:
+* Hero with tagline: *“Mapping Biodiversity from eDNA”*
+* Features grid (Upload, Processing, Visualization, Export)
+* Benefits section with icons
+* Flowchart of pipeline (Upload → Processing → Visualization → Insights → Export)
+* Privacy notice
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+###  Upload Page
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+* Drag & drop uploader
+* File preview + remove option
+* Supported formats: FASTA, CSV, Excel
+* Transparent “Start Processing” button
 
-# Step 3: Install the necessary dependencies.
-npm i
+###  Processing Page
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+* Stepwise tracker: Upload ✓ → BLAST search → Taxonomy → Metrics → Report ✓
+* DNA helix animation during loading
+* Logs in a minimal glass card
+* Success screen → “View Report”
+
+###  Report Page
+
+* Overview statistics (samples, species, metrics)
+* Charts: Pie, Bar, Line, Taxonomy Tree, Heatmap, Map
+* Searchable species table
+* Export buttons
+
+---
+
+##  Tech Stack
+
+* **Frontend:** React + TailwindCSS (minimalistic components, animations)
+* **Charts & Graphs:** Recharts / D3.js (for biodiversity visualizations)
+* **Icons:** Lucide React
+* **Fonts:** Google Sans
+
+---
+
+## 📂 Project Structure
+
+```
+/src
+  /components   → Reusable UI (buttons, navbar, charts)
+  /pages
+    Landing.jsx
+    Upload.jsx
+    Processing.jsx
+    Report.jsx
+  /assets       → Icons, illustrations
+  /styles       → Global CSS / Tailwind config
+```
+
+---
+
+## 🚀 Getting Started
+
+### 1️⃣ Clone Repo
+
+```bash
+git clone https://github.com/your-username/biodiversity-frontend.git
+cd biodiversity-frontend
+```
+
+### 2️⃣ Install Dependencies
+
+```bash
+npm install
+```
+
+### 3️⃣ Run Development Server
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### 4️⃣ Build for Production
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run build
+```
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+##  Example Report Outputs
 
-## What technologies are used for this project?
+* **Species Distribution Pie Chart**
+* **Abundance Bar Graph**
+* **Shannon Index Trend Line**
+* **Interactive Taxonomy Tree**
+* **Species Table with Search & Filters**
 
-This project is built with:
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+##  Privacy & Data Policy
 
-## How can I deploy this project?
+* All uploaded data is processed **temporarily**.
+* No permanent storage of user datasets.
+* Complies with research-grade data privacy standards.
 
-Simply open [Lovable](https://lovable.dev/projects/e6fbab75-c60b-40fe-8713-1fa635b95118) and click on Share -> Publish.
+---
 
-## Can I connect a custom domain to my Lovable project?
 
-Yes, you can!
+## 📜 License
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+This project is licensed under the **MIT License** – free to use, modify, and distribute.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+---
+
+⚡ *Designed for SIH 2025 with love, coffee, and clean code.* ☕💻
