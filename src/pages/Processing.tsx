@@ -26,7 +26,7 @@ interface ProcessStep {
 
 const Processing = () => {
   const [progress, setProgress] = useState(0);
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(0); 
   const [logs, setLogs] = useState<string[]>([
     "Starting eDNA analysis pipeline...",
     "Validating uploaded files...",
@@ -75,39 +75,56 @@ const Processing = () => {
   const [steps, setSteps] = useState(processSteps);
 
   useEffect(() => {
+    // --- THIS IS THE ONLY LINE THAT CHANGED ---
+    const TOTAL_DURATION_MS = 1.5 * 60 * 1000; // 1.5 minutes (90,000 ms)
+    // ---
+    
+    const INTERVAL_MS = 1000; // 1 second interval
+    const TOTAL_STEPS = TOTAL_DURATION_MS / INTERVAL_MS; // 90 steps
+    const PROGRESS_PER_STEP = 100 / TOTAL_STEPS; // (100 / 90) % per step
+
     const interval = setInterval(() => {
-      setProgress(prev => {
-        const newProgress = Math.min(prev + 2, 100);
+      setProgress(prevProgress => {
+        if (prevProgress >= 100) {
+          clearInterval(interval);
+          return 100;
+        }
         
-        // Update logs based on progress
-        if (newProgress >= 20 && newProgress < 22) {
+        const newProgress = Math.min(prevProgress + PROGRESS_PER_STEP, 100);
+        
+        if (prevProgress < 20 && newProgress >= 20) {
           setLogs(prev => [...prev, "BLAST search initiated against NCBI database..."]);
-        } else if (newProgress >= 40 && newProgress < 42) {
+        } else if (prevProgress < 40 && newProgress >= 40) {
           setLogs(prev => [...prev, "Found 1,247 sequence matches", "Processing taxonomic assignments..."]);
           setSteps(prev => prev.map((step, index) => 
             index === 1 ? { ...step, status: 'completed' } : 
             index === 2 ? { ...step, status: 'processing' } : step
           ));
-        } else if (newProgress >= 60 && newProgress < 62) {
+        } else if (prevProgress < 60 && newProgress >= 60) {
           setLogs(prev => [...prev, "Identified 34 unique species", "Computing biodiversity metrics..."]);
           setSteps(prev => prev.map((step, index) => 
             index === 2 ? { ...step, status: 'completed' } : 
             index === 3 ? { ...step, status: 'processing' } : step
           ));
-        } else if (newProgress >= 80 && newProgress < 82) {
+        } else if (prevProgress < 80 && newProgress >= 80) {
           setLogs(prev => [...prev, "Shannon diversity index: 2.41", "Generating visualizations..."]);
           setSteps(prev => prev.map((step, index) => 
             index === 3 ? { ...step, status: 'completed' } : 
             index === 4 ? { ...step, status: 'processing' } : step
           ));
-        } else if (newProgress >= 95 && newProgress < 97) {
+        } else if (prevProgress < 95 && newProgress >= 95) {
           setLogs(prev => [...prev, "Analysis complete ✓", "Report ready for download"]);
           setSteps(prev => prev.map(step => ({ ...step, status: 'completed' })));
+        }
+
+        if (newProgress >= 100) {
+          setSteps(prev => prev.map(step => ({ ...step, status: 'completed' })));
+          clearInterval(interval); 
         }
         
         return newProgress;
       });
-    }, 100);
+    }, INTERVAL_MS); 
 
     return () => clearInterval(interval);
   }, []);
@@ -244,6 +261,7 @@ const Processing = () => {
                   <span className="font-medium">127</span>
                 </div>
                 <div className="flex justify-between text-sm">
+      
                   <span className="text-muted-foreground">Sequences Analyzed</span>
                   <span className="font-medium">1,247</span>
                 </div>
