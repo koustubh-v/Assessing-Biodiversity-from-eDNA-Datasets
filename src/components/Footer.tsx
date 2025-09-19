@@ -30,7 +30,7 @@ const Footer = () => {
 
           {/* Copyright */}
           <div className="text-sm text-muted-foreground mt-4 md:mt-0">
-            © 2024 BioDNA Research Platform
+            © 2025 BioDNA Research Platform
           </div>
         </div>
 
