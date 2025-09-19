@@ -12,7 +12,7 @@ import {
   Dna,
   Loader2
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Already imported
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -32,7 +32,7 @@ const Processing = () => {
     "Validating uploaded files...",
     "Files validated successfully ✓"
   ]);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Already defined
 
   const processSteps: ProcessStep[] = [
     {
@@ -75,13 +75,11 @@ const Processing = () => {
   const [steps, setSteps] = useState(processSteps);
 
   useEffect(() => {
-    // --- THIS IS THE ONLY LINE THAT CHANGED ---
-    const TOTAL_DURATION_MS = 1.5 * 60 * 1000; // 1.5 minutes (90,000 ms)
-    // ---
-    
-    const INTERVAL_MS = 1000; // 1 second interval
-    const TOTAL_STEPS = TOTAL_DURATION_MS / INTERVAL_MS; // 90 steps
-    const PROGRESS_PER_STEP = 100 / TOTAL_STEPS; // (100 / 90) % per step
+    // 1.5 minute (90 second) duration
+    const TOTAL_DURATION_MS = 1.5 * 60 * 1000; 
+    const INTERVAL_MS = 1000; 
+    const TOTAL_STEPS = TOTAL_DURATION_MS / INTERVAL_MS; 
+    const PROGRESS_PER_STEP = 100 / TOTAL_STEPS; 
 
     const interval = setInterval(() => {
       setProgress(prevProgress => {
@@ -92,6 +90,7 @@ const Processing = () => {
         
         const newProgress = Math.min(prevProgress + PROGRESS_PER_STEP, 100);
         
+        // ... (all the log and step updates remain the same)
         if (prevProgress < 20 && newProgress >= 20) {
           setLogs(prev => [...prev, "BLAST search initiated against NCBI database..."]);
         } else if (prevProgress < 40 && newProgress >= 40) {
@@ -117,17 +116,20 @@ const Processing = () => {
           setSteps(prev => prev.map(step => ({ ...step, status: 'completed' })));
         }
 
+        // --- MODIFIED SECTION ---
         if (newProgress >= 100) {
           setSteps(prev => prev.map(step => ({ ...step, status: 'completed' })));
           clearInterval(interval); 
+          navigate("/report"); // <-- 1. ADD THIS LINE
         }
+        // --- END MODIFIED SECTION ---
         
         return newProgress;
       });
     }, INTERVAL_MS); 
 
     return () => clearInterval(interval);
-  }, []);
+  }, [navigate]); // <-- Add navigate to dependency array
 
   const getStepIcon = (step: ProcessStep) => {
     if (step.status === 'completed') {
@@ -172,7 +174,7 @@ const Processing = () => {
               </div>
               <Progress value={progress} className="h-3 mb-4" />
               <p className="text-sm text-muted-foreground">
-                {isComplete ? "Analysis complete! Ready to view results." : "Analyzing your eDNA sequences..."}
+                {isComplete ? "Analysis complete! Redirecting to report..." : "Analyzing your eDNA sequences..."}
               </p>
             </Card>
 
@@ -206,26 +208,9 @@ const Processing = () => {
               </div>
             </Card>
 
-            {/* Action Button */}
-            {isComplete && (
-              <Card className="glass-card p-6">
-                <div className="text-center">
-                  <CheckCircle className="h-12 w-12 text-primary mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">Analysis Complete!</h3>
-                  <p className="text-muted-foreground mb-6">
-                    Your eDNA dataset has been successfully analyzed. View the complete biodiversity report.
-                  </p>
-                  <Button
-                    onClick={() => navigate("/report")}
-                    size="lg"
-                    variant="transparent"
-                    className="hover-glow"
-                  >
-                    View Report
-                  </Button>
-                </div>
-              </Card>
-            )}
+            {/* --- 2. DELETED THIS SECTION --- */}
+            {/* Action Button Card Removed */}
+            
           </div>
 
           {/* Logs Section */}
