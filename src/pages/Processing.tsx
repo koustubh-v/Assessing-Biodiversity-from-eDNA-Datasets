@@ -76,7 +76,7 @@ const Processing = () => {
 
   useEffect(() => {
     // 1.5 minute (90 second) duration
-    const TOTAL_DURATION_MS = 1.5 * 60 * 1000; 
+    const TOTAL_DURATION_MS = 30 * 1000;  
     const INTERVAL_MS = 1000; 
     const TOTAL_STEPS = TOTAL_DURATION_MS / INTERVAL_MS; 
     const PROGRESS_PER_STEP = 100 / TOTAL_STEPS; 
