@@ -26,7 +26,7 @@ const Navbar = () => {
               <Dna className="h-6 w-6 text-black animate-dna" />
             </div>
             <span className="text-xl font-semibold text-gradient-yellow">
-              DeepSee eDNA
+              DeepSeaBio AI
             </span>
           </Link>
 
